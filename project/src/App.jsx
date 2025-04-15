@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import ApplicationForm from './pages/ApplicationForm';
-import ApplicationStatus from './pages/ApplicationStatus';
-import ExpertDashboard from './pages/ExpertDashboard';
-import BusinessDashboard from './pages/BusinessDashboard';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ApplicationForm from "./pages/ApplicationForm";
+import ApplicationStatus from "./pages/ApplicationStatus";
+import ExpertDashboard from "./pages/ExpertDashboard";
+import BusinessDashboard from "./pages/BusinessDashboard";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 function App() {
   return (
@@ -23,16 +23,15 @@ function App() {
             <Route path="/apply" element={<ApplicationForm />} />
             <Route path="/status" element={<ApplicationStatus />} />
             <Route path="/expert" element={<ExpertDashboard />} />
-            <Route path="/Business" element={<BusinessDashboard />} />
+            <Route path="/businessDashboard" element={<BusinessDashboard />} />
           </Routes>
         </main>
         <footer className="bg-dark text-light py-4 mt-auto">
           <div className="container text-center">
-            <p className="mb-0">&copy; 2025 EntrepreneurHUB. All rights reserved.</p>
-    
-            
+            <p className="mb-0">
+              &copy; 2025 EntrepreneurHUB. All rights reserved.
+            </p>
           </div>
-          
         </footer>
       </div>
     </Router>

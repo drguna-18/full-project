@@ -1,19 +1,33 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Signup() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  //   confirmPassword: ''
+  // });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Implement signup logic
-    console.log('Signup:', formData);
+    console.log("Signup:", formData);
+  };
+  const handleSignup = async (e) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Signup successful!");
+      navigate("/login");
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -28,8 +42,10 @@ function Signup() {
                 <input
                   type="text"
                   className="form-control"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  // value={formData.name}
+                  // onChange={(e) =>
+                  //   setFormData({ ...formData, name: e.target.value })
+                  // }
                   required
                 />
               </div>
@@ -38,8 +54,12 @@ function Signup() {
                 <input
                   type="email"
                   className="form-control"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  // value={formData.email}
+                  // onChange={(e) =>
+                  //   setFormData({ ...formData, email: e.target.value })
+                  // }
+
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -48,8 +68,11 @@ function Signup() {
                 <input
                   type="password"
                   className="form-control"
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  // value={formData.password}
+                  // onChange={(e) =>
+                  //   setFormData({ ...formData, password: e.target.value })
+                  // }
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -58,12 +81,23 @@ function Signup() {
                 <input
                   type="password"
                   className="form-control"
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                  // value={formData.confirmPassword}
+                  // onChange={(e) =>
+                  //   setFormData({
+                  //     ...formData,
+                  //     confirmPassword: e.target.value,
+                  //   })
+                  //}
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                onClick={handleSignup}
+              >
+                Sign Up
+              </button>
             </form>
           </div>
         </div>

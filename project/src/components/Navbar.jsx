@@ -34,7 +34,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/Business ">
+              <Link className="nav-link" to="/BusinessDashboard">
                 <i className="bi bi-clipboard-check me-1"></i> BusinessDashboard
               </Link>
             </li>

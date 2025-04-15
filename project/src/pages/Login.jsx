@@ -1,17 +1,31 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // TODO: Implement login logic
+  //   console.log('Login:', formData);
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    console.log('Login:', formData);
+    try {
+      const { email, password } = formData;
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      navigate("/"); // or wherever you want
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -27,7 +41,9 @@ function Login() {
                   type="email"
                   className="form-control"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -37,11 +53,15 @@ function Login() {
                   type="password"
                   className="form-control"
                   value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">Login</button>
+              <button type="submit" className="btn btn-primary w-100">
+                Login
+              </button>
             </form>
           </div>
         </div>

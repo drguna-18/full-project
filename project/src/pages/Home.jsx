@@ -57,7 +57,7 @@ const sectors = [
   {
     name: "New Sector",
     icon: <FaSearch/>,
-    description: "Smart manufacturing and industrial solutions",
+    description: "Search new sector",
   },
 ];
 
