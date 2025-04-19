@@ -31,7 +31,7 @@ function Login() {
   return (
     <div className="row justify-content-center">
       <div className="col-md-6">
-        <div className="card">
+        <div className="card main">
           <div className="card-body">
             <h2 className="text-center mb-4">Login</h2>
             <form onSubmit={handleSubmit}>

@@ -21,7 +21,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/apply" element={<ApplicationForm />} />
-            <Route path="/status" element={<ApplicationStatus />} />
+            {/* <Route path="/status" element={<ApplicationStatus />} /> */}
             <Route path="/expert" element={<ExpertDashboard />} />
             <Route path="/businessDashboard" element={<BusinessDashboard />} />
           </Routes>

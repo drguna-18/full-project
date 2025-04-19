@@ -28,9 +28,19 @@ function Navbar() {
                 <i className="bi bi-file-earmark-text me-1"></i> Apply
               </Link>
             </li> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/status">
                 <i className="bi bi-clipboard-check me-1"></i> Status
+              </Link>
+            </li> */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/Contact">
+                <i className="bi bi-file-earmark-text me-1"></i> Contact
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Faq">
+                <i className="bi bi-file-earmark-text me-1"></i> FAQs
               </Link>
             </li>
             <li className="nav-item">
@@ -38,14 +48,14 @@ function Navbar() {
                 <i className="bi bi-clipboard-check me-1"></i> BusinessDashboard
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
+            <li className="nav-item ">
+              <Link className="nav-link1" to="/login">
                 <i className="bi bi-box-arrow-in-right me-1"></i> Login
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/signup">
-                <i className="bi bi-person-plus me-1"></i> Signup
+              <Link className="nav-link2" to="/Register">
+                <i className="bi bi-person-plus me-1"></i> Register
               </Link>
             </li>
           </ul>

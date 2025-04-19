@@ -185,61 +185,6 @@ function BusinessDashboard() {
       </nav>
 
       <Container>
-        <Row className="mb-4">
-          <Col lg={3} md={6}>
-            <Card className="dashboard-stat">
-              <Card.Body>
-                <div className="d-flex align-items-center">
-                  <FaFileAlt className="stat-icon" />
-                  <div>
-                    <h6>Pending Approvals</h6>
-                    <h3>5</h3>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6}>
-            <Card className="dashboard-stat">
-              <Card.Body>
-                <div className="d-flex align-items-center">
-                  <FaCheckCircle className="stat-icon" />
-                  <div>
-                    <h6>Approved Licenses</h6>
-                    <h3>3</h3>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6}>
-            <Card className="dashboard-stat">
-              <Card.Body>
-                <div className="d-flex align-items-center">
-                  <FaBuilding className="stat-icon" />
-                  <div>
-                    <h6>Departments</h6>
-                    <h3>8</h3>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6}>
-            <Card className="dashboard-stat">
-              <Card.Body>
-                <div className="d-flex align-items-center">
-                  <FaUpload className="stat-icon" />
-                  <div>
-                    <h6>Documents</h6>
-                    <h3>12</h3>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
         <Row>
           <Col>
             <Nav variant="tabs" className="mb-4">

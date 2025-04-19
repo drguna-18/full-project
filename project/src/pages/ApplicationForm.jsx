@@ -1,121 +1,133 @@
 import { useState } from "react";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 
 function ApplicationForm() {
   const [formData, setFormData] = useState({
     businessName: "",
     sector: "",
-    description: "",
-    investment: "",
-    location: "",
+    address: "",
+    contactNumber: "",
+    documents: "",
+    InvestmentAmount: "",
   });
 
-  const sectors = [
-    "Technology",
-    "Manufacturing",
-    "Agriculture",
-    "Healthcare",
-    "Education",
-    "Retail",
-    "Services",
-  ];
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Implement application submission logic
-    console.log("Application submitted:", formData);
-    await fetch(" http://localhost:5000/api/data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData ),
-    })
-      .then((response) => response.json()) // Convert response to JSON
-      .then((data) => console.log("Success:", data)) // Handle success
-      .catch((error) => console.error("Error:", error)); // Handle errors
+    // Handle business registration logic here
+    console.log("Business registration:", formData);
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-8">
-        <div className="card">
-          <div className="card-body">
-            <h2 className="text-center mb-4">Business Application Form</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Business Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={formData.businessName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, businessName: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Sector</label>
-                <select
-                  className="form-select"
-                  value={formData.sector}
-                  onChange={(e) =>
-                    setFormData({ ...formData, sector: e.target.value })
-                  }
-                  required
-                >
-                  <option value="">Select a sector</option>
-                  {sectors.map((sector) => (
-                    <option key={sector} value={sector}>
-                      {sector}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Business Description</label>
-                <textarea
-                  className="form-control"
-                  rows="4"
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  required
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Investment Amount ($)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={formData.investment}
-                  onChange={(e) =>
-                    setFormData({ ...formData, investment: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Location</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={formData.location}
-                  onChange={(e) =>
-                    setFormData({ ...formData, location: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Submit Application
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Business Registration Form</h2>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Business Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter business name"
+                    value={formData.businessName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, businessName: e.target.value })
+                    }
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Business Sector</Form.Label>
+                  <Form.Select
+                    value={formData.sector}
+                    onChange={(e) =>
+                      setFormData({ ...formData, sector: e.target.value })
+                    }
+                    required
+                  >
+                    <option value="">Select a sector</option>
+                    <option value="technology">Technology</option>
+                    <option value="retail">Retail</option>
+                    <option value="food">Food & Beverage</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="education">Education</option>
+                  </Form.Select>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Business Description</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Enter business Description"
+                    value={formData.address}
+                    onChange={(e) =>
+                      setFormData({ ...formData, address: e.target.value })
+                    }
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Contact Number</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Enter contact number"
+                    value={formData.contactNumber}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contactNumber: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Investment Amount ($)</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Enter investment amount"
+                    value={formData.InvestmentAmount}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        InvestmentAmount: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Upload Documents</Form.Label>
+                  <Form.Control
+                    type="file"
+                    multiple
+                    onChange={(e) =>
+                      setFormData({ ...formData, documents: e.target.files })
+                    }
+                    required
+                  />
+                  <Form.Text className="text-muted">
+                    Please upload all required documents (ID proof, address
+                    proof, etc.)
+                  </Form.Text>
+                </Form.Group>
+
+                <Button variant="primary" type="submit" className="w-100">
+                  Submit Registration
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
