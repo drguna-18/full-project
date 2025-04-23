@@ -102,7 +102,6 @@ function ApplicationForm() {
                     required
                   />
                 </Form.Group>
-                
 
                 <Form.Group className="mb-3">
                   <Form.Label>Upload Documents</Form.Label>
@@ -119,26 +118,134 @@ function ApplicationForm() {
                     proof, etc.)
                   </Form.Text>
                 </Form.Group>
+                <div className="mb-3">
+                  <label className="form-label fw-bold">
+                    Are you a first-time founder?
+                  </label>
+                  <div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="firstTimeFounder"
+                        id="founderYes"
+                        value="Yes"
+                        required
+                      />
+                      <label className="form-check-label" htmlFor="founderYes">
+                        Yes
+                      </label>
+                    </div>
+
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="firstTimeFounder"
+                        id="founderNo"
+                        value="No"
+                      />
+                      <label className="form-check-label" htmlFor="founderNo">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <Form.Group className="mb-3">
-                  <h3>founder details</h3>
-                  <Form.Label>Contact Number</Form.Label>
+                  <h3>Founder details</h3>
+                  <Form.Label>Name</Form.Label>
                   <Form.Control
-                    type="tel"
-                    placeholder="Enter contact number"
-                    value={formData.contactNumber}
+                    type="text"
+                    placeholder="Enter name"
+                    value={formData.name}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        contactNumber: e.target.value,
+                        name: e.target.value,
                       })
                     }
                     required
                   />
                 </Form.Group>
+                <div className="mb-3">
+                  <label className="form-label">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter email address"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    placeholder="Enter phone number"
+                  />
+                </div>
 
-                <Button variant="primary" type="submit" className="w-100">
-                  Submit Registration
-                </Button>
+                <div className="mb-3">
+                  <label className="form-label">Social Profile</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    placeholder="Any Social Profile Link"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Address</label>
+                  <textarea
+                    className="form-control"
+                    rows="2"
+                    placeholder="Address"
+                  ></textarea>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Nationality</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. Indian"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Founder Photo</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Aadhar No</label>
+                  <textarea
+                    className="form-control"
+                    rows="1"
+                    placeholder="Aadhar No"
+                  ></textarea>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label htmlFor="aadharUpload" className="form-label fw-bold">
+                    Upload Aadhar (PDF)
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control w-100" // Adjust width using w-75 or any width class
+                    id="aadharUpload"
+                    accept="application/pdf"
+                    required
+                  />
+                  <div className="form-text text-muted">
+                    Only PDF format is accepted. Max file size: 2MB.
+                  </div>
+                </div>
+                <div className="d-flex justify-content-center mt-4">
+                  <Button variant="primary" type="submit" className="w-50">
+                    Submit Registration
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
