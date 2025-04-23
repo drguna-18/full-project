@@ -102,6 +102,7 @@ function ApplicationForm() {
                     required
                   />
                 </Form.Group>
+                
 
                 <Form.Group className="mb-3">
                   <Form.Label>Upload Documents</Form.Label>
@@ -117,6 +118,22 @@ function ApplicationForm() {
                     Please upload all required documents (ID proof, address
                     proof, etc.)
                   </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <h3>founder details</h3>
+                  <Form.Label>Contact Number</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Enter contact number"
+                    value={formData.contactNumber}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contactNumber: e.target.value,
+                      })
+                    }
+                    required
+                  />
                 </Form.Group>
 
                 <Button variant="primary" type="submit" className="w-100">

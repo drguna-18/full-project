@@ -7,6 +7,9 @@ import ApplicationForm from "./pages/ApplicationForm";
 import ApplicationStatus from "./pages/ApplicationStatus";
 import ExpertDashboard from "./pages/ExpertDashboard";
 import BusinessDashboard from "./pages/BusinessDashboard";
+import AboutPage from "./components/bussness/about";
+import ContactPage from "./components/bussness/contact";
+import EnvironmentalClearance from "./components/bussness/EnvironmentalClearance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -24,6 +27,10 @@ function App() {
             {/* <Route path="/status" element={<ApplicationStatus />} /> */}
             <Route path="/expert" element={<ExpertDashboard />} />
             <Route path="/businessDashboard" element={<BusinessDashboard />} />
+            <Route path="/environmentalclearance" element={<EnvironmentalClearance />} />
+            <Route path="/AboutPage" element={<AboutPage/>} />
+            <Route path="/ContactPage" element={<ContactPage/>} />
+            
           </Routes>
         </main>
         <footer className="bg-dark text-light py-4 mt-auto">

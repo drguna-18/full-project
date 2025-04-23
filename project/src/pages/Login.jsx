@@ -1,8 +1,34 @@
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { createUserWithEmailAndPassword } from 'firebase/auth';//
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "../firebase";
+
+// function Login() {
+//   const [formData, setFormData] = useState({
+//     email: "",
+//     password: "",
+//   });
+  // const navigate = useNavigate();
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const { email, password } = formData;
+//     await signInWithEmailAndPassword(auth, email, password);
+//     alert("Login successful!");
+//     navigate("/"); // or wherever you want
+//   } catch (err) {
+//     alert(err.message);
+//     }
+//   };
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+
+
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,62 +37,67 @@ function Login() {
   });
   const navigate = useNavigate();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // TODO: Implement login logic
-  //   console.log('Login:', formData);
-  // };
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const { email, password } = formData;
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
-      navigate("/"); // or wherever you want
-    } catch (err) {
-      alert(err.message);
-    }
+    // Handle login logic here
+    console.log("Login attempt:", formData);
   };
+ 
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6">
-        <div className="card main">
-          <div className="card-body">
-            <h2 className="text-center mb-4">Login</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Login
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container className="py-5">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Login</h2>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>password</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter password"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    required
+                  />
+                </Form.Group>
+                <div className="forget">
+                  <a
+                    href="#"
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+
+                <Button variant="primary" type="submit" className="w-100">
+                  Login
+                </Button>
+                <p className="text-center mb-0">
+                  Don't have an account? <Link to="/Signup">Sign Up</Link>
+                </p>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

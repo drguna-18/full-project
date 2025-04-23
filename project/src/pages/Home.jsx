@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -56,7 +55,7 @@ const sectors = [
   },
   {
     name: "New Sector",
-    icon: <FaSearch/>,
+    icon: <FaSearch />,
     description: "Search new sector",
   },
 ];
@@ -190,7 +189,11 @@ function Home() {
                   Professional evaluation of your application by industry
                   experts
                 </p>
-                <Link to="/login" className="btn btn-primary">
+                <Link
+                  to="/login"
+                  className="btn btn-primary"
+                
+                >
                   Login as Expert
                 </Link>
               </div>
