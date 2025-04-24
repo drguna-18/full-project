@@ -1,34 +1,11 @@
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { createUserWithEmailAndPassword } from 'firebase/auth';//
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase";
-
-// function Login() {
-//   const [formData, setFormData] = useState({
-//     email: "",
-//     password: "",
-//   });
-  // const navigate = useNavigate();
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const { email, password } = formData;
-//     await signInWithEmailAndPassword(auth, email, password);
-//     alert("Login successful!");
-//     navigate("/"); // or wherever you want
-//   } catch (err) {
-//     alert(err.message);
-//     }
-//   };
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth"; //
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-
-
+import { auth } from "../firebase";
+import Forget from "./Forget";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -37,12 +14,18 @@ function Login() {
   });
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login attempt:", formData);
+    try {
+      const { email, password } = formData;
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      localStorage.setItem("userCheck", "loggedIn");
+      navigate("/"); // or wherever you want
+    } catch (err) {
+      alert(err.message);
+    }
   };
- 
 
   return (
     <Container className="py-5">
@@ -77,13 +60,13 @@ function Login() {
                     required
                   />
                 </Form.Group>
-                <div className="forget">
-                  <a
-                    href="#"
+                <div className="Forget">
+                  <Link
+                    to="/Forget"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
 
                 <Button variant="primary" type="submit" className="w-100">

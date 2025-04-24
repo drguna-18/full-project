@@ -9,6 +9,7 @@ import ExpertDashboard from "./pages/ExpertDashboard";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import AboutPage from "./components/bussness/about";
 import ContactPage from "./components/bussness/contact";
+import Forget from "./pages/Forget";
 import EnvironmentalClearance from "./components/bussness/EnvironmentalClearance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/environmentalclearance" element={<EnvironmentalClearance />} />
             <Route path="/AboutPage" element={<AboutPage/>} />
             <Route path="/ContactPage" element={<ContactPage/>} />
+            <Route path="/Forget" element={<Forget/>} />
             
           </Routes>
         </main>

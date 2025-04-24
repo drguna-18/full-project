@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 
 function ApplicationForm() {
@@ -10,11 +11,21 @@ function ApplicationForm() {
     documents: "",
     InvestmentAmount: "",
   });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("userCheck");
+    if (currentUser === "loggedIn") {
+      console.log("Business registration:", formData);
+    } else {
+     
+      navigate("/login");
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle business registration logic here
-    console.log("Business registration:", formData);
   };
 
   return (

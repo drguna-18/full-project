@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const BusinessDashboard = () => {
   const [activeTab, setActiveTab] = useState("approvals");
+  
 
   useEffect(() => {
     const links = document.querySelectorAll("[data-route]");
@@ -60,7 +61,6 @@ const BusinessDashboard = () => {
                   </div>
                   <div className="col-lg-6 mt-5 mt-lg-0 text-center">
                     <div class="image-container" id="imageContainer">
-                     
                       <img
                         src="https://th.bing.com/th/id/OIP.SMfJJQMxMN82jakislgDDQHaE7?w=626&h=417&rs=1&pid=ImgDetMain"
                         alt="Entrepreneur 3"
@@ -436,18 +436,3 @@ const BusinessDashboard = () => {
 };
 
 export default BusinessDashboard;
-const container = document.getElementById('imageContainer');
-  let scrollAmount = 0;
-
-  function autoScroll() {
-    scrollAmount += 1;
-    container.scrollLeft = scrollAmount;
-
-    if (scrollAmount >= container.scrollWidth - container.clientWidth) {
-      scrollAmount = 0;
-    }
-
-    requestAnimationFrame(autoScroll);
-  }
-
-  autoScroll();
