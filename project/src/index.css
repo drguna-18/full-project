@@ -672,3 +672,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #0052cc;
 }
+
+.dashboard-title{
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2c3e50, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 4px;
+}

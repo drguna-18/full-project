@@ -43,13 +43,13 @@ const BusinessDashboard = () => {
                       clearance, and more.
                     </p>
                     <div className="d-flex flex-wrap gap-2">
-                      <a
-                        href="#trade-license"
+                      <Link
+                        to="/Dashboard"
                         className="btn btn-light btn-lg px-4 me-md-2"
-                        data-route="trade-license"
+                       
                       >
-                        Status Updates
-                      </a>
+                        Approval Status
+                      </Link>
                       {/* <a
                         href="#about"
                         className="btn btn-outline-light btn-lg px-4"
