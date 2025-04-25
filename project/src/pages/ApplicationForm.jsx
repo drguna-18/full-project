@@ -18,7 +18,6 @@ function ApplicationForm() {
     if (currentUser === "loggedIn") {
       console.log("Business registration:", formData);
     } else {
-     
       navigate("/login");
     }
   }, []);
@@ -141,7 +140,13 @@ function ApplicationForm() {
                         name="firstTimeFounder"
                         id="founderYes"
                         value="Yes"
-                        required
+                        checked={formData.firstTimeFounder === "Yes"}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            firstTimeFounder: e.target.value,
+                          })
+                        }
                       />
                       <label className="form-check-label" htmlFor="founderYes">
                         Yes
@@ -155,6 +160,13 @@ function ApplicationForm() {
                         name="firstTimeFounder"
                         id="founderNo"
                         value="No"
+                        checked={formData.firstTimeFounder === "No"}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            firstTimeFounder: e.target.value,
+                          })
+                        }
                       />
                       <label className="form-check-label" htmlFor="founderNo">
                         No
@@ -162,96 +174,148 @@ function ApplicationForm() {
                     </div>
                   </div>
                 </div>
-                <Form.Group className="mb-3">
-                  <h3>Founder details</h3>
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        name: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                </Form.Group>
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter email address"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Phone Number</label>
-                  <input
-                    type="tel"
-                    className="form-control"
-                    placeholder="Enter phone number"
-                  />
-                </div>
+                {formData.firstTimeFounder === "Yes" && (
+                  <>
+                    <Form.Group className="mb-3">
+                      <h3>Founder details</h3>
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter name"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        required
+                      />
+                    </Form.Group>
+                    <div className="mb-3">
+                      <label className="form-label">Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Enter email address"
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Phone Number</label>
+                      <input
+                        type="tel"
+                        className="form-control"
+                        placeholder="Enter phone number"
+                        value={formData.founderPhone}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            founderPhone: e.target.value,
+                          })
+                        }
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Social Profile</label>
+                      <input
+                        type="url"
+                        className="form-control"
+                        placeholder="Any Social Profile Link"
+                        value={formData.socialProfile}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            socialProfile: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Address</label>
+                      <textarea
+                        className="form-control"
+                        rows="2"
+                        placeholder="Address"
+                        value={formData.founderAddress}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            founderAddress: e.target.value,
+                          })
+                        }
+                      ></textarea>
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Nationality</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="e.g. Indian"
+                        value={formData.nationality}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            nationality: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Founder Photo</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        accept="image/*"
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            founderPhoto: e.target.files[0],
+                          })
+                        }
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Aadhar No</label>
+                      <textarea
+                        className="form-control"
+                        rows="1"
+                        placeholder="Aadhar No"
+                        value={formData.aadharNo}
+                        onChange={(e) =>
+                          setFormData({ ...formData, aadharNo: e.target.value })
+                        }
+                      ></textarea>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label
+                        htmlFor="aadharUpload"
+                        className="form-label fw-bold"
+                      >
+                        Upload Aadhar (PDF)
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control w-100"
+                        id="aadharUpload"
+                        accept="application/pdf"
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            aadharPdf: e.target.files[0],
+                          })
+                        }
+                        required
+                      />
+                      <div className="form-text text-muted">
+                        Only PDF format is accepted. Max file size: 2MB.
+                      </div>
+                    </div>
+                  </>
+                )}
 
-                <div className="mb-3">
-                  <label className="form-label">Social Profile</label>
-                  <input
-                    type="url"
-                    className="form-control"
-                    placeholder="Any Social Profile Link"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Address</label>
-                  <textarea
-                    className="form-control"
-                    rows="2"
-                    placeholder="Address"
-                  ></textarea>
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Nationality</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="e.g. Indian"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Founder Photo</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    accept="image/*"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Aadhar No</label>
-                  <textarea
-                    className="form-control"
-                    rows="1"
-                    placeholder="Aadhar No"
-                  ></textarea>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="aadharUpload" className="form-label fw-bold">
-                    Upload Aadhar (PDF)
-                  </label>
-                  <input
-                    type="file"
-                    className="form-control w-100" // Adjust width using w-75 or any width class
-                    id="aadharUpload"
-                    accept="application/pdf"
-                    required
-                  />
-                  <div className="form-text text-muted">
-                    Only PDF format is accepted. Max file size: 2MB.
-                  </div>
-                </div>
                 <div className="d-flex justify-content-center mt-4">
                   <Button variant="primary" type="submit" className="w-50">
                     Submit Registration

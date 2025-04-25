@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const BusinessDashboard = () => {
   const [activeTab, setActiveTab] = useState("approvals");
-  
 
   useEffect(() => {
     const links = document.querySelectorAll("[data-route]");
@@ -111,13 +110,12 @@ const BusinessDashboard = () => {
                           Get your business trade license quickly and easily
                           with our streamlined application process.
                         </p>
-                        <a
-                          href="#trade-license"
+                        <Link
+                          to="/TradeLicense"
                           className="btn btn-outline-primary"
-                          data-route="trade-license"
                         >
                           Apply Now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -144,13 +142,12 @@ const BusinessDashboard = () => {
                           Register for GST and get your GSTIN quickly with our
                           expert-guided application process.
                         </p>
-                        <a
-                          href="#gst-registration"
-                          class="btn btn-outline-primary"
-                          data-route="gst-registration"
+                        <Link
+                          to="/GstRegistration"
+                          className="btn btn-outline-primary"
                         >
                           Apply Now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
