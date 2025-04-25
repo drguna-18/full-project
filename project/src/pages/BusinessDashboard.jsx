@@ -48,14 +48,14 @@ const BusinessDashboard = () => {
                         className="btn btn-light btn-lg px-4 me-md-2"
                         data-route="trade-license"
                       >
-                        Get Started
+                        Status Updates
                       </a>
-                      <a
+                      {/* <a
                         href="#about"
                         className="btn btn-outline-light btn-lg px-4"
                       >
                         Learn More
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                   <div className="col-lg-6 mt-5 mt-lg-0 text-center">
@@ -81,7 +81,7 @@ const BusinessDashboard = () => {
             <section className="py-5">
               <div className="container">
                 <div className="text-center mb-5">
-                  <h2 className="fw-bold">Our Registration Services</h2>
+                  <h2 className="fw-bold">Your Approvals</h2>
                   <p className="lead text-muted">
                     Everything you need to start and operate your business
                     legally
@@ -211,13 +211,12 @@ const BusinessDashboard = () => {
                           Apply for industry-specific permits including FSSAI,
                           health licenses, and more.
                         </p>
-                        <a
-                          href="#other-permits"
-                          class="btn btn-outline-primary"
-                          data-route="other-permits"
+                        <Link
+                          to="/HealthForm "
+                          className="btn btn-outline-primary"
                         >
                           Apply Now
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -411,13 +410,12 @@ const BusinessDashboard = () => {
                     </p>
                   </div>
                   <div class="col-lg-4 text-lg-end">
-                    <a
-                      href="#trade-license"
+                    <Link
+                      to="/TradeLicense"
                       className="btn btn-light btn-lg px-4"
-                      data-route="trade-license"
                     >
                       Apply Now
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

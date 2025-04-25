@@ -318,6 +318,7 @@ function ApplicationForm() {
 
                 <div className="d-flex justify-content-center mt-4">
                   <Button variant="primary" type="submit" className="w-50">
+                    <Link></Link>
                     Submit Registration
                   </Button>
                 </div>

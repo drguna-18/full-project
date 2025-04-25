@@ -66,8 +66,8 @@ function TradeLicensePage() {
   return (
     <Container className="py-5">
       <Breadcrumb className="mb-4">
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>Home</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/registration' }}>Registration</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/BusinessDashboard' }}>Business Registration</Breadcrumb.Item>
+        {/* <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/registration' }}>Registration</Breadcrumb.Item> */}
         <Breadcrumb.Item active>Trade License</Breadcrumb.Item>
       </Breadcrumb>
 

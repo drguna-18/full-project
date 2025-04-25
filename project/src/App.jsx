@@ -13,6 +13,7 @@ import Forget from "./pages/Forget";
 import EnvironmentalClearance from "./components/bussness/EnvironmentalClearance";
 import TradeLicensePage from "./components/bussness/tradeLicense";
 import GstRegistrationPage from "./components/bussness/gstRegistration";
+import HealthForm from "./components/bussness/HealthForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/ContactPage" element={<ContactPage/>} />
             <Route path="/Forget" element={<Forget/>} />
             <Route path="/GstRegistration" element={<GstRegistrationPage />} />
+            <Route path="/HealthForm " element={<HealthForm />} />
             
           </Routes>
         </main>
