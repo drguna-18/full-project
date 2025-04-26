@@ -121,7 +121,7 @@ Business Dashboard
 }
 
 .navbar {
-  background: linear-gradient(90deg, #0e5672 0%, #0e5672 100%) !important;
+  background: linear-gradient(90deg,#0a2463 0%,#0a2463 100%) !important;
   padding: 1rem 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -679,7 +679,6 @@ body {
   margin-top: 1rem;
   font-weight: 700;
   background: linear-gradient(90deg, #2c3e50, #3498db);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
