@@ -718,9 +718,9 @@ navbar links
   color: black;
   border: none;
   border-radius: 50px;
-  background: rgb(197, 190, 190);
+  background: rgb(255, 255, 255);
   box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
 }
 
 .nav-links.disabled {
