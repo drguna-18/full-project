@@ -720,6 +720,7 @@ navbar links
   border-radius: 50px;
   background: rgb(197, 190, 190);
   box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+  transition: all 0.4s ease;
 }
 
 .nav-links.disabled {
