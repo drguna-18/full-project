@@ -18,32 +18,29 @@
   height: 4rem;
   border-radius: 0.75rem;
 }
-
-.nav-link {
-  position: relative;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background-color: white;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
+/* .nav-link:hover::after {
   width: 100%;
+} */
+.nav-link1{
+  color:  #333;
+  text-decoration: none;
+  position: relative;
+  top: 5px;
+  left: 30px;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+  /* display: inline-flex; */
+  align-items: center;
+  overflow: hidden;  
 }
-.nav-link1,
 .nav-link2 {
   color: #333;
   transition: all 0.3s ease;
   padding: 5px;
-  margin-left: 10px;
+  margin-left: 30px;
   border-radius: 10px;
   position: relative;
   font-size: 15px;
@@ -58,7 +55,7 @@
 .nav-link2:hover {
   color: #ffffff; /* Text turns white */
   background-color: #0d6efd; /* Background turns blue */
-  transform: translateY(-2px); /* Slight lift effect */
+  /* transform: translateY(-2px); Slight lift effect */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
@@ -75,3 +72,29 @@
 .form-control:focus {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
 }
+
+/* =================
+navbar links 
+====================*/
+
+/* .nav-link:hover{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color:#ffffff;
+  color: rgb(36, 36, 36);
+} */
+/* .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+} */
+
+/* .nav-link {
+  position: relative;
+} */

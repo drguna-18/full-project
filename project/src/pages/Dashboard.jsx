@@ -41,6 +41,7 @@ function Dashboard() {
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
   return (
+<<<<<<< HEAD
     <Container fluid>
       {/* Sidebar (Offcanvas) */}
       <Offcanvas
@@ -58,6 +59,23 @@ function Dashboard() {
             alt="Profile"
             className="rounded-circle mb-3"
             style={{ width: "80px", height: "80px", objectFit: "cover" }}
+=======
+    <Container>
+      {/* <Sidebar/> */}
+      
+      <div>
+        <div className='Dash'>
+      <h1 className="dashboard-title">Dashboard</h1>
+      </div>
+      <p className="lead mb-5 text-muted" style={{marginTop:"1rem"}}>Monitor the status of your approvals.</p>
+      
+      <Row className="g-4">
+        <Col md={4}>
+          <StatusCard 
+            title="Trade License" 
+            status={cardStatuses.tradeLicense}
+            icon="building"
+>>>>>>> 515faa67af04cab4713b7a04502cf5c77ed187ca
           />
           <h5>{user.name}</h5>
           <p className="text-muted">{user.email}</p>
@@ -94,6 +112,7 @@ function Dashboard() {
           </Col>
         </Row>
       </Row>
+      </div>
     </Container>
   );
 }
