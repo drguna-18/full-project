@@ -89,13 +89,14 @@ function Navbar() {
                     style={{
                       cursor: "pointer",
                       color: "white",
-                      fontSize: "24px",
+                      fontSize:"25px",
+                      paddingLeft:"20px",
                       display: "flex",
                       alignItems: "center",
                     }}
-                    className="nav-link"
+                    className="nav-icon"
                   >
-                    <i className="bi bi-person-circle"></i>
+                    <i className="bi bi-person-circle nav-icon"></i>
                   </span>
                 </li>
               )}
