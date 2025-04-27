@@ -6,12 +6,7 @@ import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { auth } from "../firebase";
 
 function Signup() {
-  // const [formData, setFormData] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: ''
-  // });
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,8 +33,8 @@ function Signup() {
 
     // Check if passwords match
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
+      usetError("Passwords do not match.");
+      retrn;
     }
     // TODO: Implement signup logic
     try {
