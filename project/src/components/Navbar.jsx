@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
@@ -38,13 +40,14 @@ function Navbar() {
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            onClick={() => setMenuOpen(!menuOpen)}
+            // data-bs-toggle="collapse"
+            // data-bs-target="#navbarNav"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`} id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link className="nav-links" to="/">
