@@ -1,20 +1,34 @@
 import { Link } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
-  // Dummy user data (replace with real data later)
-  const user = {
-    name: "John Doe",
-    email: "john@example.com",
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setCurrentUser(user);
+        localStorage.setItem("userCheck", "loggedIn");
+      } else {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Clean up
+  }, []);
 
   useEffect(() => {
     const userCheck = localStorage.getItem("userCheck");
@@ -27,6 +41,7 @@ function Navbar() {
     localStorage.removeItem("userCheck");
     setIsLoggedIn(false);
     setShowSidebar(false);
+    navigate("/");
   };
 
   return (
@@ -47,7 +62,10 @@ function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`} id="navbarNav">
+          <div
+            className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}
+            id="navbarNav"
+          >
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link className="nav-links" to="/">
@@ -92,8 +110,8 @@ function Navbar() {
                     style={{
                       cursor: "pointer",
                       color: "white",
-                      fontSize:"25px",
-                      paddingLeft:"20px",
+                      fontSize: "25px",
+                      paddingLeft: "20px",
                       display: "flex",
                       alignItems: "center",
                     }}
@@ -120,8 +138,8 @@ function Navbar() {
         </Offcanvas.Header>
         <Offcanvas.Body className="text-center">
           <i className="bi bi-person-circle" style={{ fontSize: "80px" }}></i>
-          <h5>{user.name}</h5>
-          <p className="text-muted">{user.email}</p>
+          <h5>{currentUser?.displayName || "No Name"}</h5>
+          <p className="text-muted">{currentUser?.email || "No Email"}</p>
           <button className="btn btn-danger" onClick={handleLogout}>
             Logout
           </button>

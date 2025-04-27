@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { Container, Row, Col, Card, Button, Form, Table, Nav, Modal } from 'react-bootstrap';
 // import { FaFileAlt, FaSearch, FaUpload, FaBuilding, FaCheckCircle, FaDownload, FaEye } from 'react-icons/fa'
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const BusinessDashboard = () => {
   const [activeTab, setActiveTab] = useState("approvals");
-
+   
   useEffect(() => {
     const links = document.querySelectorAll("[data-route]");
     links.forEach((link) => {
@@ -17,6 +18,9 @@ const BusinessDashboard = () => {
       });
     });
 
+    
+  
+
     return () => {
       links.forEach((link) => {
         link.removeEventListener("click", () => {});
@@ -25,6 +29,14 @@ const BusinessDashboard = () => {
   }, []);
 
   const renderContent = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      const currentUser = localStorage.getItem("userCheck");
+      if (currentUser !== "loggedIn") {
+        navigate("/login");
+      }
+    }, []);
+    
     switch (activeTab) {
       case "approvals":
         return (
