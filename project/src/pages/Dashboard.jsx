@@ -31,7 +31,12 @@ function Dashboard() {
 
   return (
     <Container>
+      {/* <Sidebar/> */}
+      
+      <div>
+        <div className='Dash'>
       <h1 className="dashboard-title">Dashboard</h1>
+      </div>
       <p className="lead mb-5 text-muted" style={{marginTop:"1rem"}}>Monitor the status of your approvals.</p>
       
       <Row className="g-4">
@@ -57,6 +62,7 @@ function Dashboard() {
           />
         </Col>
       </Row>
+      </div>
     </Container>
   );
 }

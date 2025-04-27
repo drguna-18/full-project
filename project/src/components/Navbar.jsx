@@ -19,7 +19,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <Link className="nav-links" to="/">
                 <i className="bi bi-house-door me-1"></i> Home
               </Link>
             </li>
@@ -34,17 +34,17 @@ function Navbar() {
               </Link>
             </li> */}
              <li className="nav-item">
-              <Link className="nav-link" to="/BusinessDashboard">
+              <Link className="nav-links" to="/BusinessDashboard">
                 <i className="bi bi-clipboard-check me-1"></i>Business Registration
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/ContactPage">
+              <Link className="nav-links" to="/ContactPage">
                 <i className="bi bi-file-earmark-text me-1"></i> Contact
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/AboutPage">
+              <Link className="nav-links" to="/AboutPage">
                 <i className="bi bi-file-earmark-text me-1"></i> About
               </Link>
             </li>
