@@ -18,6 +18,7 @@
   height: 4rem;
   border-radius: 0.75rem;
 }
+<<<<<<< HEAD
 /* .nav-link:hover::after {
   width: 100%;
 } */
@@ -35,20 +36,51 @@
   transition: all 0.4s ease;
   
 }
-.nav-link2 {
-  color:  #0d6efd;
-  text-decoration: none;
-  position: relative;
-  top: 7px;
-  left: 30px;
-  background-color: #f9fbff;
+=======
 
-  padding: 5px;
-  margin: 10px;
-  border-radius: 5px;
-  
+.nav-link {
+  position: relative;
 }
 
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+.nav-link1,
+>>>>>>> d450b5a31117ef98bc8c9fa9e5035f0f0cc847d9
+.nav-link2 {
+  color: #333;
+  transition: all 0.3s ease;
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 10px;
+  position: relative;
+  font-size: 15px;
+  padding-left: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  overflow: hidden; /* Ensures slide effect doesn't overflow outside */
+}
+.nav-link1:hover,
+.nav-link2:hover {
+  color: #ffffff; /* Text turns white */
+  background-color: #0d6efd; /* Background turns blue */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
 
 .card {
   border: none;

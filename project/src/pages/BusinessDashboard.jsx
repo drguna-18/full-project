@@ -212,7 +212,7 @@ const BusinessDashboard = () => {
                           health licenses, and more.
                         </p>
                         <Link
-                          to="/HealthForm "
+                          to="/FssaiPermitPage "
                           className="btn btn-outline-primary"
                         >
                           Apply Now
