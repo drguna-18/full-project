@@ -126,10 +126,10 @@ function FssaiPermitPage() {
 
   return (
     <Container className="py-5">
-      <h1>hello</h1>
+      {/* <h1>hello</h1> */}
       <Breadcrumb className="mb-4">
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/businessDashboard" }}>
-          Home
+        Business Registration
         </Breadcrumb.Item>
         {/* <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/registration" }}>
           Registration
@@ -218,34 +218,344 @@ function FssaiPermitPage() {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="address">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter address.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="city">
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter city.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="state">
+                        <Form.Label>State</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="state"
+                          value={formData.state}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter state.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="pincode">
+                        <Form.Label>Pincode</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="pincode"
+                          value={formData.pincode}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter pincode.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                 </Form>
               )}
 
               {currentStep === 2 && (
                 <Form id="fssai-step2Form" noValidate validated={validated}>
                   <h4 className="mb-4">Business Address</h4>
-                  {/* Business Address fields */}
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="address">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter address.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="city">
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter city.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="state">
+                        <Form.Label>State</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="state"
+                          value={formData.state}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter state.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="pincode">
+                        <Form.Label>Pincode</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="pincode"
+                          value={formData.pincode}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter pincode.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                 </Form>
               )}
 
               {currentStep === 3 && (
                 <Form id="fssai-step3Form" noValidate validated={validated}>
                   <h4 className="mb-4">Food Business Details</h4>
-                  {/* Food Business Details fields */}
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="fssaiCategory">
+                        <Form.Label>FSSAI Category</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="fssaiCategory"
+                          value={formData.fssaiCategory}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter FSSAI category.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="annualTurnover">
+                        <Form.Label>Annual Turnover</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="annualTurnover"
+                          value={formData.annualTurnover}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please enter turnover.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Food Categories</Form.Label>
+                    {foodCategoryOptions.map((category, index) => (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        label={category}
+                        value={category}
+                        checked={formData.foodCategories.includes(category)}
+                        onChange={handleFoodCategoryChange}
+                      />
+                    ))}
+                  </Form.Group>
+
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="productionCapacity">
+                        <Form.Label>Production Capacity (per day)</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="productionCapacity"
+                          value={formData.productionCapacity}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="waterSource">
+                        <Form.Label>Water Source</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="waterSource"
+                          value={formData.waterSource}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Form.Group controlId="storageType" className="mb-3">
+                    <Form.Label>Storage Type</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="storageType"
+                      value={formData.storageType}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </Form.Group>
                 </Form>
               )}
 
               {currentStep === 4 && (
                 <Form id="fssai-step4Form" noValidate validated={validated}>
                   <h4 className="mb-4">Applicant Information</h4>
-                  {/* Applicant Information fields */}
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="ownerName">
+                        <Form.Label>Owner Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="ownerName"
+                          value={formData.ownerName}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="ownerDesignation">
+                        <Form.Label>Designation</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="ownerDesignation"
+                          value={formData.ownerDesignation}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Row className="mb-3">
+                    <Col md={6}>
+                      <Form.Group controlId="ownerEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                          type="email"
+                          name="ownerEmail"
+                          value={formData.ownerEmail}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="ownerPhone">
+                        <Form.Label>Phone</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="ownerPhone"
+                          value={formData.ownerPhone}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
                 </Form>
               )}
 
               {currentStep === 5 && (
                 <Form id="fssai-step5Form" noValidate validated={validated}>
                   <h4 className="mb-4">Document Upload</h4>
-                  {/* Document Upload fields */}
+                  <Form.Group controlId="addressProof" className="mb-3">
+                    <Form.Label>Address Proof</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="addressProof"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="identityProof" className="mb-3">
+                    <Form.Label>Identity Proof</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="identityProof"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="businessProof" className="mb-3">
+                    <Form.Label>Business Proof</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="businessProof"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="foodSafetyPlan" className="mb-3">
+                    <Form.Label>Food Safety Plan</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="foodSafetyPlan"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="medicalFitness" className="mb-3">
+                    <Form.Label>Medical Fitness Certificate</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="medicalFitness"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
                 </Form>
               )}
 
@@ -257,7 +567,14 @@ function FssaiPermitPage() {
                   onSubmit={handleSubmit}
                 >
                   <h4 className="mb-4">Review & Submit</h4>
-                  {/* Review info */}
+                  <Form.Check
+                    type="checkbox"
+                    label="I hereby declare that the information provided is true to the best of my knowledge."
+                    name="declarationAgreed"
+                    checked={formData.declarationAgreed}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </Form>
               )}
 
