@@ -9,7 +9,7 @@ import Forget from "./Forget";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
+    email: " ",
     password: "",
   });
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ function Login() {
       alert("Login successful!");
       localStorage.setItem("userCheck", "loggedIn");
       navigate("/"); // or wherever you want
+      window.location.reload();
     } catch (err) {
       alert(err.message);
     }
@@ -38,7 +39,7 @@ function Login() {
                 <Form.Group className="mb-3">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Enter email"
                     value={formData.email}
                     onChange={(e) =>
@@ -51,7 +52,7 @@ function Login() {
                 <Form.Group className="mb-3">
                   <Form.Label>password</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="password"
                     placeholder="Enter password"
                     value={formData.password}
                     onChange={(e) =>

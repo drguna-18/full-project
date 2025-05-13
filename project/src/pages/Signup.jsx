@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { auth } from "../firebase";
 
 function Signup() {
-  // const [formData, setFormData] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: ''
-  // });
+  const [fullName, setFullName] = useState(""); // Added fullName state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,7 +23,6 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Password validation
     if (!validatePassword(password)) {
       setError(
         "Password must be at least 8 characters long and include a number and a special character."
@@ -36,22 +30,33 @@ function Signup() {
       return;
     }
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-    // TODO: Implement signup logic
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert("Signup successful!");
 
-      navigate("/login");
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Update user's display name
+      await updateProfile(user, {
+        displayName: fullName,
+      });
+
+      alert("Signup successful!");
+      const userCheck = localStorage.getItem("userCheck");
+
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       alert(err.message);
       setError(err.message);
     }
-    console.log("Signup:", formData);
   };
 
   return (
@@ -67,8 +72,8 @@ function Signup() {
                   <Form.Control
                     type="text"
                     placeholder="Enter your full name"
-                    // value={email}
-                    // onChange={(e) => setEmail(e.target.value)}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                     required
                   />
                 </Form.Group>
@@ -92,8 +97,14 @@ function Signup() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
+                    isInvalid={!!error}
                     required
                   />
+                  {error && (
+                    <Form.Control.Feedback type="invalid">
+                      {error}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -101,6 +112,7 @@ function Signup() {
                   <Form.Control
                     type="password"
                     placeholder="Confirm Password"
+                    value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="form-control"
                     required
@@ -110,7 +122,7 @@ function Signup() {
                 <Button variant="primary" type="submit" className="w-100">
                   Sign Up
                 </Button>
-                <p className="text-center mb-0">
+                <p className="text-center mb-0 mt-3">
                   Already have an account? <Link to="/login">Login</Link>
                 </p>
               </Form>

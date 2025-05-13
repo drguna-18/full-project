@@ -1,16 +1,14 @@
 .dcard {
   border: none;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  box-shadow: 
-    0 10px 20px rgba(0, 0, 0, 0.05),
-    0 2px 6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.03);
   overflow: hidden;
 }
 
 .dcard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -31,9 +29,7 @@
 
 .dcard:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.08),
-    0 8px 16px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
 .status-badge {
@@ -44,8 +40,7 @@
   border-radius: 30px;
   font-size: 0.95rem;
   letter-spacing: 0.5px;
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.1),
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
     inset 0 2px 4px rgba(255, 255, 255, 0.2);
   text-transform: uppercase;
 }
@@ -63,7 +58,7 @@
 
 .status-icon:hover {
   transform: rotate(15deg) scale(1.1);
-  background: rgba(52, 152, 219, 0.15);
+  background: rgba(0, 141, 235, 0.15);
 }
 
 .dcard-title {
@@ -118,25 +113,24 @@
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .dcard {
-    background: rgba(44, 62, 80, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
   }
-  
+
   .dcard-title {
-    color: #ecf0f1;
+    color: #f1ecec;
   }
-  
+
   .status-info h5 {
     color: #bdc3c7;
   }
-  
+
   .status-icon {
     background: rgba(255, 255, 255, 0.1);
   }
 
   .status-badge {
-    box-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.2),
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
       inset 0 2px 4px rgba(255, 255, 255, 0.1);
   }
 }

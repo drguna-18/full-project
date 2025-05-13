@@ -104,12 +104,12 @@ function Home() {
             Streamline your business approval process with our expert review
             system
           </p>
-          <Link to="/apply" className="btn btn-light btn-lg px-4 me-3">
+          <Link to="/apply" className="btn btn-outline-light btn-lg px-4">
             Get Started
           </Link>
-          <Link to="/status" className="btn btn-outline-light btn-lg px-4">
+          {/* <Link to="/status" className="btn btn-outline-light btn-lg px-4">
             Check Status
-          </Link>
+          </Link> */}
         </div>
       </section>
 
