@@ -9,7 +9,7 @@ import Forget from "./Forget";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
+    email: " ",
     password: "",
   });
   const navigate = useNavigate();
