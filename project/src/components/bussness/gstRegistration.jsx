@@ -1,4 +1,4 @@
-// Updated GstRegistrationPage.jsx with inline step indicator and buttons
+import axios from "axios";
 import { useState } from "react";
 import {
   Container,
@@ -12,13 +12,11 @@ import {
 import { Link } from "react-router-dom";
 
 function GstRegistrationPage() {
+  
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     businessName: "",
     businessPan: "",
-    businessType: "",
-    businessActivity: "",
-    turnover: "",
     address: "",
     city: "",
     state: "",
@@ -27,17 +25,10 @@ function GstRegistrationPage() {
     signatoryDob: "",
     signatoryFatherName: "",
     signatoryAadhaar: "",
-    signatoryEmail: "",
-    signatoryMobile: "",
     accountNumber: "",
     ifscCode: "",
-    bankName: "",
-    branchName: "",
     panCard: "",
     aadhaarCard: "",
-    addressProof: "",
-    bankStatement: "",
-    incorporation: "",
     declarationAgreed: false,
   });
   const [validated, setValidated] = useState(false);
@@ -75,17 +66,292 @@ function GstRegistrationPage() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = document.getElementById(`gst-step${currentStep}Form`);
-    if (form.checkValidity()) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
+    const handleSubmit = async (e) => {
+  e.preventDefault();
+  const form = document.getElementById(`gst-step${currentStep}Form`);
+
+  if (form.checkValidity()) {
+    setValidated(false);
+    setIsSubmitting(true);
+
+    try {
+      const dataToSend = new FormData();
+
+      for (const key in formData) {
+        dataToSend.append(key, formData[key]);
+      }
+
+      const response = await axios.post("http://localhost:5000/gstLicense", dataToSend);
+      console.log(response.data);
+      
+
+      if (response.ok) {
         setSubmitSuccess(true);
-      }, 2000);
-    } else {
-      setValidated(true);
+      } else {
+        const errorData = await response.json();
+        alert(`Submission failed: ${errorData.message || "Unknown error"}`);
+      }
+    } catch (error) {
+      alert(`An error occurred: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
+  } else {
+    setValidated(true);
+  }
+
+  };
+
+  const renderStepForm = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <Form id="gst-step1Form" noValidate validated={validated}>
+            <h4 className="mb-4">Business Information</h4>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Business Name*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="businessName"
+                    value={formData.businessName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter your business name.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Business PAN*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="businessPan"
+                    value={formData.businessPan}
+                    onChange={handleInputChange}
+                    required
+                    maxLength="10"
+                   
+                    title="Format: 5 letters, 4 numbers, 1 letter"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a valid PAN.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        );
+      case 2:
+        return (
+          <Form id="gst-step2Form" noValidate validated={validated}>
+            <h4 className="mb-4">Address Details</h4>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Address*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter address.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>City*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter city.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>State*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter state.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Pincode*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="pincode"
+                    value={formData.pincode}
+                    onChange={handleInputChange}
+                    required
+                    maxLength="6"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter valid pincode.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        );
+      case 3:
+        return (
+          <Form id="gst-step3Form" noValidate validated={validated}>
+            <h4 className="mb-4">Authorized Signatory</h4>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Name*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="signatoryName"
+                    value={formData.signatoryName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Date of Birth*</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="signatoryDob"
+                    value={formData.signatoryDob}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Father's Name*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="signatoryFatherName"
+                    value={formData.signatoryFatherName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Aadhaar Number*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="signatoryAadhaar"
+                    value={formData.signatoryAadhaar}
+                    onChange={handleInputChange}
+                    required
+                    maxLength="12"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        );
+      case 4:
+        return (
+          <Form id="gst-step4Form" noValidate validated={validated}>
+            <h4 className="mb-4">Bank Details</h4>
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Account Number*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="accountNumber"
+                    value={formData.accountNumber}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>IFSC Code*</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="ifscCode"
+                    value={formData.ifscCode}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        );
+      case 5:
+        return (
+          <Form id="gst-step5Form" noValidate validated={validated}>
+            <h4 className="mb-4">Document Upload</h4>
+            <Form.Group className="mb-3">
+              <Form.Label>PAN Card*</Form.Label>
+              <Form.Control
+                type="file"
+                name="panCard"
+                onChange={handleFileChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Aadhaar Card*</Form.Label>
+              <Form.Control
+                type="file"
+                name="aadhaarCard"
+                onChange={handleFileChange}
+                required
+              />
+            </Form.Group>
+          </Form>
+        );
+      case 6:
+        return (
+          <Form id="gst-step6Form" noValidate validated={validated}>
+            <h4 className="mb-4">Review & Submit</h4>
+            <Form.Group controlId="declaration">
+              <Form.Check
+                type="checkbox"
+                label="I hereby declare the information provided is true."
+                name="declarationAgreed"
+                checked={formData.declarationAgreed}
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                You must agree before submitting.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+        );
+      default:
+        return null;
     }
   };
 
@@ -116,7 +382,6 @@ function GstRegistrationPage() {
         </Alert>
       ) : (
         <>
-          {/* Inline Step Indicator */}
           <div className="d-flex justify-content-between mb-4">
             {steps.map((label, index) => {
               const stepNum = index + 1;
@@ -138,120 +403,10 @@ function GstRegistrationPage() {
             })}
           </div>
 
-          {/* Main Step Forms (Step 1 shown as example) */}
           <Card className="border-0 shadow-sm mb-4">
             <Card.Body className="p-4">
-              {currentStep === 1 && (
-                <Form id="gst-step1Form" noValidate validated={validated}>
-                  <h4 className="mb-4">Business Information</h4>
-                  <Row className="mb-3">
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Business Name*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="businessName"
-                          value={formData.businessName}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter your business name.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Business PAN*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="businessPan"
-                          value={formData.businessPan}
-                          onChange={handleInputChange}
-                          required
-                          maxLength="10"
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter valid PAN.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  {/* Add more fields similarly */}
-                </Form>
-              )}
-              {currentStep === 2 && (
-                <Form id="gst-step2Form" noValidate validated={validated}>
-                  <h4 className="mb-4">Address Details</h4>
-                  <Row className="mb-3">
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Address*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter address.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>City*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="city"
-                          value={formData.city}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter city.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row className="mb-3">
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>State*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="state"
-                          value={formData.state}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter state.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Pincode*</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="pincode"
-                          value={formData.pincode}
-                          onChange={handleInputChange}
-                          required
-                          maxLength="6"
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please enter valid pincode.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </Form>
-              )}
+              {renderStepForm()}
 
-              {/* Inline Navigation Buttons */}
               <div className="d-flex justify-content-between mt-4">
                 {currentStep > 1 && (
                   <button

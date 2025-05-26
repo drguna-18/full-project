@@ -1,44 +1,99 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-import fetch from "node-fetch";
+import axios from "axios";
 
 function ApplicationForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     businessName: "",
     sector: "",
     address: "",
     contactNumber: "",
-    documents: "",
+    documents: null,
     InvestmentAmount: "",
+    firstTimeFounder: "",
+    name: "",
+    email: "",
+    founderPhone: "",
+    socialProfile: "",
+    founderAddress: "",
+    nationality: "",
+    founderPhoto: null,
+    aadharNo: "",
+    aadharPdf: null,
   });
-  const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const currentUser = localStorage.getItem("userCheck");
-    if (currentUser === "loggedIn") {
-      console.log("Business registration:", formData);
-    } else {
-      navigate("/login");
-    }
+    // Uncomment to enable login protection
+    // if (currentUser !== "loggedIn") navigate("/login");
   }, []);
+
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      documents: e.target.files,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
-    const url = "/api/data";
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+    const form = new FormData();
+
+    // Append all text fields except files
+    Object.keys(formData).forEach((key) => {
+      if (
+        key !== "documents" &&
+        key !== "founderPhoto" &&
+        key !== "aadharPdf"
+      ) {
+        form.append(key, formData[key]);
       }
+    });
 
-      const json = await response.json();
-      console.log(json);
-    } catch (error) {
-      console.error(error.message);
+    // Append documents (multi-file upload)
+    if (formData.documents && formData.documents.length > 0) {
+      Array.from(formData.documents).forEach((file) => {
+        form.append("documents", file);
+        console.log(form);
+        
+      });
     }
+
+    // Append founder photo
+    if (formData.founderPhoto) {
+      form.append("founderPhoto", formData.founderPhoto);
+    }
+
+    // Append Aadhar PDF
+    if (formData.aadharPdf) {
+      form.append("aadharPdf", formData.aadharPdf);
+    }
+    console.log(formData);
+    
+if (formData.aadharNo && !/^\d{12}$/.test(formData.aadharNo)) {
+  alert("Aadhar number must be a 12-digit number.");
+  return;
+}
+
+    
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/data", form);
+
+      
+      console.log("Server response:", response.data);
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Failed to submit form");
+    }finally{
+      navigate("/businessDashboard")
+    }
+
   };
 
   return (
@@ -53,7 +108,6 @@ function ApplicationForm() {
                   <Form.Label>Business Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter business name"
                     value={formData.businessName}
                     onChange={(e) =>
                       setFormData({ ...formData, businessName: e.target.value })
@@ -86,7 +140,6 @@ function ApplicationForm() {
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    placeholder="Enter business Description"
                     value={formData.address}
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
@@ -99,7 +152,6 @@ function ApplicationForm() {
                   <Form.Label>Contact Number</Form.Label>
                   <Form.Control
                     type="tel"
-                    placeholder="Enter contact number"
                     value={formData.contactNumber}
                     onChange={(e) =>
                       setFormData({
@@ -115,7 +167,6 @@ function ApplicationForm() {
                   <Form.Label>Investment Amount ($)</Form.Label>
                   <Form.Control
                     type="tel"
-                    placeholder="Enter investment amount"
                     value={formData.InvestmentAmount}
                     onChange={(e) =>
                       setFormData({
@@ -132,70 +183,58 @@ function ApplicationForm() {
                   <Form.Control
                     type="file"
                     multiple
-                    onChange={(e) =>
-                      setFormData({ ...formData, documents: e.target.files })
-                    }
+                    onChange={handleFileChange}
                     required
                   />
                   <Form.Text className="text-muted">
-                    Please upload all required documents (ID proof, address
-                    proof, etc.)
-                  </Form.Text>
-                </Form.Group>
-                <div className="mb-3">
-                  <label className="form-label fw-bold">
-                    Are you a first-time founder?
-                  </label>
-                  <div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="firstTimeFounder"
-                        id="founderYes"
-                        value="Yes"
-                        checked={formData.firstTimeFounder === "Yes"}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            firstTimeFounder: e.target.value,
-                          })
-                        }
-                      />
-                      <label className="form-check-label" htmlFor="founderYes">
-                        Yes
-                      </label>
-                    </div>
+                        Only PDF format. Max size: 2MB.
+                      </Form.Text>
+                    </Form.Group>
 
-                    <div className="form-check form-check-inline">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="firstTimeFounder"
-                        id="founderNo"
-                        value="No"
-                        checked={formData.firstTimeFounder === "No"}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            firstTimeFounder: e.target.value,
-                          })
-                        }
-                      />
-                      <label className="form-check-label" htmlFor="founderNo">
-                        No
-                      </label>
-                    </div>
+                <div className="mb-3">
+                  <Form.Label className="fw-bold">
+                    Are you a first-time founder?
+                  </Form.Label>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="firstTimeFounder"
+                      value="Yes"
+                      checked={formData.firstTimeFounder === "Yes"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          firstTimeFounder: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="form-check-label">Yes</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="firstTimeFounder"
+                      value="No"
+                      checked={formData.firstTimeFounder === "No"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          firstTimeFounder: e.target.value,
+                        })
+                      }
+                    />
+                    <label className="form-check-label">No</label>
                   </div>
                 </div>
+
                 {formData.firstTimeFounder === "Yes" && (
                   <>
                     <Form.Group className="mb-3">
-                      <h3>Founder details</h3>
                       <Form.Label>Name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Enter name"
                         value={formData.name}
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
@@ -203,25 +242,23 @@ function ApplicationForm() {
                         required
                       />
                     </Form.Group>
-                    <div className="mb-3">
-                      <label className="form-label">Email</label>
-                      <input
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
                         type="email"
-                        className="form-control"
-                        placeholder="Enter email address"
                         value={formData.email}
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
                         required
                       />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Phone Number</label>
-                      <input
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
                         type="tel"
-                        className="form-control"
-                        placeholder="Enter phone number"
                         value={formData.founderPhone}
                         onChange={(e) =>
                           setFormData({
@@ -231,13 +268,12 @@ function ApplicationForm() {
                         }
                         required
                       />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Social Profile</label>
-                      <input
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Social Profile</Form.Label>
+                      <Form.Control
                         type="url"
-                        className="form-control"
-                        placeholder="Any Social Profile Link"
                         value={formData.socialProfile}
                         onChange={(e) =>
                           setFormData({
@@ -246,13 +282,13 @@ function ApplicationForm() {
                           })
                         }
                       />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Address</label>
-                      <textarea
-                        className="form-control"
-                        rows="2"
-                        placeholder="Address"
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Founder Address</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={2}
                         value={formData.founderAddress}
                         onChange={(e) =>
                           setFormData({
@@ -260,14 +296,13 @@ function ApplicationForm() {
                             founderAddress: e.target.value,
                           })
                         }
-                      ></textarea>
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Nationality</label>
-                      <input
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Nationality</Form.Label>
+                      <Form.Control
                         type="text"
-                        className="form-control"
-                        placeholder="e.g. Indian"
                         value={formData.nationality}
                         onChange={(e) =>
                           setFormData({
@@ -276,12 +311,12 @@ function ApplicationForm() {
                           })
                         }
                       />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Founder Photo</label>
-                      <input
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Founder Photo</Form.Label>
+                      <Form.Control
                         type="file"
-                        className="form-control"
                         accept="image/*"
                         onChange={(e) =>
                           setFormData({
@@ -290,30 +325,26 @@ function ApplicationForm() {
                           })
                         }
                       />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Aadhar No</label>
-                      <textarea
-                        className="form-control"
-                        rows="1"
-                        placeholder="Aadhar No"
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Aadhar No</Form.Label>
+                      <Form.Control
+                        type="text"
                         value={formData.aadharNo}
                         onChange={(e) =>
-                          setFormData({ ...formData, aadharNo: e.target.value })
+                          setFormData({
+                            ...formData,
+                            aadharNo: e.target.value,
+                          })
                         }
-                      ></textarea>
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label
-                        htmlFor="aadharUpload"
-                        className="form-label fw-bold"
-                      >
-                        Upload Aadhar (PDF)
-                      </label>
-                      <input
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Upload Aadhar (PDF)</Form.Label>
+                      <Form.Control
                         type="file"
-                        className="form-control w-100"
-                        id="aadharUpload"
                         accept="application/pdf"
                         onChange={(e) =>
                           setFormData({
@@ -323,10 +354,10 @@ function ApplicationForm() {
                         }
                         required
                       />
-                      <div className="form-text text-muted">
-                        Only PDF format is accepted. Max file size: 2MB.
-                      </div>
-                    </div>
+                      <Form.Text className="text-muted">
+                        Only PDF format. Max size: 2MB.
+                      </Form.Text>
+                    </Form.Group>
                   </>
                 )}
 

@@ -1,5 +1,6 @@
 // Full EnvironmentalClearancePage.jsx with all form steps inline and working navigation
 import { useState } from "react";
+import axios from "axios";
 import {
   Container,
   Form,
@@ -75,19 +76,64 @@ function EnvironmentalClearancePage() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = document.getElementById(`env-step${currentStep}Form`);
-    if (form.checkValidity()) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-      }, 2000);
-    } else {
-      setValidated(true);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const form = document.getElementById(`env-step${currentStep}Form`);
+  if (!form.checkValidity()) {
+    setValidated(true);
+    return;
+  }
+
+  setIsSubmitting(true);
+  setValidated(false);
+
+  try {
+    const data = new FormData();
+
+    // Append each field
+    for (const key in formData) {
+      // Handle files separately
+      if (
+        key === "projectReport" ||
+        key === "landDocuments" ||
+        key === "locationMap" ||
+        key === "layoutPlan"
+      ) {
+        if (formData[key] instanceof File) {
+          data.append(key, formData[key]);
+        }
+      } else if (typeof formData[key] === "boolean") {
+        // Convert boolean to string for submission
+        data.append(key, formData[key] ? "true" : "false");
+      } else {
+        data.append(key, formData[key]);
+      }
     }
-  };
+
+    const response = await axios.post(
+      "http://localhost:5000/environmentalClearance",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      setSubmitSuccess(true);
+    } else {
+      alert("Submission failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    alert("An error occurred while submitting. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const renderStepContent = () => {
     switch (currentStep) {

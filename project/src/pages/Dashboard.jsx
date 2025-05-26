@@ -3,9 +3,33 @@ import StatusCard from "../components/StatusCard";
 import { useState, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
+import axios from "axios";
+
 function Dashboard() {
+  const status = localStorage.getItem("status")||"pending";
+
+  const [applications, setApplications] = useState([]);
+    const [selectedApp, setSelectedApp] = useState(null); // ✅ should be null, not false
+    const [selectedLicense,setSelectedLicense]= useState([]);
+  
+    useEffect(() => {
+      const fetchApplications = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/api/getTradeLicense');
+          const data = response.data;
+          setApplications(data);
+        } catch (error) {
+          console.error("Error fetching trade licenses:", error);
+          toast.error("Failed to fetch trade license applications.");
+        }
+      };
+  
+      fetchApplications();
+    }, []);
+  
+
   const [cardStatuses, setCardStatuses] = useState({
-    tradeLicense: "Pending",
+    tradeLicense: status,
     gst: "Pending",
     documents: "Pending",
   });
@@ -21,7 +45,7 @@ function Dashboard() {
     const fetchStatuses = async () => {
       try {
         const mockData = {
-          tradeLicense: "Completed",
+          tradeLicense: status,
           gst: "Pending",
           documents: "Rejected",
         };
@@ -55,14 +79,14 @@ function Dashboard() {
           </p>
 
           <Row className="g-4">
-            <Col md={4}>
+            {applications.length!==0&&(<Col md={4}>
               <StatusCard
                 title="Trade License"
                 status={cardStatuses.tradeLicense}
                 icon="building"
               />
-            </Col>
-            <Col md={4}>
+            </Col>)}
+            {/* <Col md={4}>
               <StatusCard
                 title="GST"
                 status={cardStatuses.gst}
@@ -75,7 +99,7 @@ function Dashboard() {
                 status={cardStatuses.documents}
                 icon="file-earmark-text"
               />
-            </Col>
+            </Col> */}
           </Row>
         </Row>
       </div>

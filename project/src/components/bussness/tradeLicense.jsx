@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Form,
@@ -8,6 +9,7 @@ import {
   Alert,
   Breadcrumb,
 } from "react-bootstrap";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 function TradeLicensePage() {
@@ -35,7 +37,7 @@ function TradeLicensePage() {
   const [validated, setValidated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-
+  const navigate = useNavigate();
   const steps = [
     "Business Information",
     "Address Details",
@@ -51,6 +53,7 @@ function TradeLicensePage() {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
+    // Store file name (can be modified to store actual File object if needed)
     setFormData({ ...formData, [name]: files[0] ? files[0].name : "" });
   };
 
@@ -70,19 +73,62 @@ function TradeLicensePage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = document.getElementById(`step${currentStep}Form`);
-    if (form.checkValidity()) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-      }, 2000);
-    } else {
+    if (!form.checkValidity()) {
       setValidated(true);
+      return;
+    }
+  
+    setIsSubmitting(true);
+  
+    const formDataToSend = new FormData();
+  
+    // Append all non-file fields
+    for (const key in formData) {
+      if (
+        !["addressProof", "ownerIdDocument", "businessProof", "nocFromOwner"].includes(key)
+      ) {
+        formDataToSend.append(key, formData[key]);
+      }
+    }
+  
+    // Append file fields (stored as File objects)
+    if (formData.addressProof) {
+      formDataToSend.append("addressProof", formData.addressProof);
+    }
+    if (formData.ownerIdDocument) {
+      formDataToSend.append("ownerIdDocument", formData.ownerIdDocument);
+    }
+    if (formData.businessProof) {
+      formDataToSend.append("businessProof", formData.businessProof);
+    }
+    if (formData.nocFromOwner) {
+      formDataToSend.append("nocFromOwner", formData.nocFromOwner);
+    }
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/tradeLicense",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      setSubmitSuccess(true);
+    } catch (error) {
+      console.error("Error submitting trade license:", error);
+      alert("Failed to submit application. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+      navigate("/Dashboard")
     }
   };
+  
 
   return (
     <Container className="py-5">
@@ -90,7 +136,6 @@ function TradeLicensePage() {
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/BusinessDashboard" }}>
           Business Registration
         </Breadcrumb.Item>
-        {/* <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/registration' }}>Registration</Breadcrumb.Item> */}
         <Breadcrumb.Item active>Trade License</Breadcrumb.Item>
       </Breadcrumb>
 
@@ -112,7 +157,6 @@ function TradeLicensePage() {
         </Alert>
       ) : (
         <>
-          {/* Inline Step Indicator */}
           <div className="d-flex justify-content-between mb-4">
             {steps.map((label, index) => {
               const stepNum = index + 1;
@@ -138,6 +182,7 @@ function TradeLicensePage() {
             <Card.Body className="p-4">
               {currentStep === 1 && (
                 <Form id="step1Form" noValidate validated={validated}>
+                  {/* Business Info */}
                   <h4 className="mb-4">Business Information</h4>
                   <Row className="mb-3">
                     <Col md={6}>
@@ -221,6 +266,7 @@ function TradeLicensePage() {
 
               {currentStep === 2 && (
                 <Form id="step2Form" noValidate validated={validated}>
+                  {/* Address Info */}
                   <h4 className="mb-4">Address Details</h4>
                   <Row className="mb-3">
                     <Col md={6}>
@@ -292,6 +338,7 @@ function TradeLicensePage() {
 
               {currentStep === 3 && (
                 <Form id="step3Form" noValidate validated={validated}>
+                  {/* Owner Info */}
                   <h4 className="mb-4">Owner Information</h4>
                   <Row className="mb-3">
                     <Col md={6}>
@@ -385,6 +432,7 @@ function TradeLicensePage() {
 
               {currentStep === 4 && (
                 <Form id="step4Form" noValidate validated={validated}>
+                  {/* Documents */}
                   <h4 className="mb-4">Document Upload</h4>
                   <Row className="mb-3">
                     <Col md={6}>
@@ -451,6 +499,7 @@ function TradeLicensePage() {
 
               {currentStep === 5 && (
                 <Form id="step5Form" noValidate validated={validated}>
+                  {/* Review */}
                   <h4 className="mb-4">Review & Submit</h4>
                   <ul className="list-group mb-3">
                     <li className="list-group-item">
@@ -495,7 +544,6 @@ function TradeLicensePage() {
                 </Form>
               )}
 
-              {/* Inline Navigation Buttons */}
               <div className="d-flex justify-content-between mt-4">
                 {currentStep > 1 && (
                   <button

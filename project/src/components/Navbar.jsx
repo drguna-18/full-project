@@ -43,6 +43,8 @@ function Navbar() {
     setShowSidebar(false);
     navigate("/");
   };
+  const adminEmail = "newadmin@example.com"; // Put your admin email here
+  const isAdmin = currentUser?.email === adminEmail;
 
   return (
     <>
@@ -88,6 +90,18 @@ function Navbar() {
                   <i className="bi bi-file-earmark-text me-1"></i> About
                 </Link>
               </li>
+              {/* <li className="nav-item">
+                <Link className="nav-links" to="/AdminDashboard">
+                  <i className="bi bi-speedometer2 me-1"></i> Admin Dashboard
+                </Link>
+              </li> */}
+              {isAdmin && (
+                <li className="nav-item">
+                  <Link className="nav-links" to="/AdminDashboard">
+                    <i className="bi bi-speedometer2 me-1"></i> Admin Dashboard
+                  </Link>
+                </li>
+              )}
 
               {/* Show Login/Signup if not logged in, else show User Icon */}
               {!isLoggedIn ? (
