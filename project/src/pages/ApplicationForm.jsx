@@ -24,13 +24,11 @@ function ApplicationForm() {
     aadharPdf: null,
   });
 
-  
+  const currentUser = localStorage.getItem("userCheck");
 
-  useEffect(() => {
-    const currentUser = localStorage.getItem("userCheck");
-    // Uncomment to enable login protection
-    // if (currentUser !== "loggedIn") navigate("/login");
-  }, []);
+  if (currentUser !== "loggedIn") {
+    navigate("/login");
+  }
 
   const handleFileChange = (e) => {
     setFormData({
@@ -60,7 +58,6 @@ function ApplicationForm() {
       Array.from(formData.documents).forEach((file) => {
         form.append("documents", file);
         console.log(form);
-        
       });
     }
 
@@ -74,26 +71,25 @@ function ApplicationForm() {
       form.append("aadharPdf", formData.aadharPdf);
     }
     console.log(formData);
-    
-if (formData.aadharNo && !/^\d{12}$/.test(formData.aadharNo)) {
-  alert("Aadhar number must be a 12-digit number.");
-  return;
-}
 
-    
+    if (formData.aadharNo && !/^\d{12}$/.test(formData.aadharNo)) {
+      alert("Aadhar number must be a 12-digit number.");
+      return;
+    }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/data", form);
+      // const response = await axios.post("http://localhost:5000/api/data", form);
 
-      
-      console.log("Server response:", response.data);
+      // console.log("Server response:", response.data);
+      localStorage.setItem("form", "submitted");
+
+      alert("Submited successfully");
     } catch (error) {
       console.error("Submission error:", error);
       alert("Failed to submit form");
-    }finally{
-      navigate("/businessDashboard")
+    } finally {
+      navigate("/businessDashboard");
     }
-
   };
 
   return (
@@ -187,9 +183,9 @@ if (formData.aadharNo && !/^\d{12}$/.test(formData.aadharNo)) {
                     required
                   />
                   <Form.Text className="text-muted">
-                        Only PDF format. Max size: 2MB.
-                      </Form.Text>
-                    </Form.Group>
+                    Only PDF format. Max size: 2MB.
+                  </Form.Text>
+                </Form.Group>
 
                 <div className="mb-3">
                   <Form.Label className="fw-bold">

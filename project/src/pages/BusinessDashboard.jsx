@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 // import { Container, Row, Col, Card, Button, Form, Table, Nav, Modal } from 'react-bootstrap';
 // import { FaFileAlt, FaSearch, FaUpload, FaBuilding, FaCheckCircle, FaDownload, FaEye } from 'react-icons/fa'
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 const BusinessDashboard = () => {
   const [activeTab, setActiveTab] = useState("approvals");
-   
+  const isForm = localStorage.getItem("form", "submitted");
+  if (!isForm) {
+    const navigate = useNavigate();
+    navigate("/businessDashboard");
+  }
+
   useEffect(() => {
     const links = document.querySelectorAll("[data-route]");
     links.forEach((link) => {
@@ -17,9 +23,6 @@ const BusinessDashboard = () => {
         window.location.hash = route;
       });
     });
-
-    
-  
 
     return () => {
       links.forEach((link) => {
@@ -36,7 +39,7 @@ const BusinessDashboard = () => {
         navigate("/login");
       }
     }, []);
-    
+
     switch (activeTab) {
       case "approvals":
         return (
@@ -58,7 +61,6 @@ const BusinessDashboard = () => {
                       <Link
                         to="/Dashboard"
                         className="btn btn-light btn-lg px-4 me-md-2"
-                       
                       >
                         Approval Status
                       </Link>

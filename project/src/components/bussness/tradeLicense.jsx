@@ -80,20 +80,25 @@ function TradeLicensePage() {
       setValidated(true);
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     const formDataToSend = new FormData();
-  
+
     // Append all non-file fields
     for (const key in formData) {
       if (
-        !["addressProof", "ownerIdDocument", "businessProof", "nocFromOwner"].includes(key)
+        ![
+          "addressProof",
+          "ownerIdDocument",
+          "businessProof",
+          "nocFromOwner",
+        ].includes(key)
       ) {
         formDataToSend.append(key, formData[key]);
       }
     }
-  
+
     // Append file fields (stored as File objects)
     if (formData.addressProof) {
       formDataToSend.append("addressProof", formData.addressProof);
@@ -107,8 +112,9 @@ function TradeLicensePage() {
     if (formData.nocFromOwner) {
       formDataToSend.append("nocFromOwner", formData.nocFromOwner);
     }
-  
+
     try {
+      localStorage.setItem("status", "Pending");
       const response = await axios.post(
         "http://localhost:5000/tradeLicense",
         formDataToSend,
@@ -118,17 +124,16 @@ function TradeLicensePage() {
           },
         }
       );
-  
+
       setSubmitSuccess(true);
     } catch (error) {
       console.error("Error submitting trade license:", error);
       alert("Failed to submit application. Please try again later.");
     } finally {
       setIsSubmitting(false);
-      navigate("/Dashboard")
+      navigate("/Dashboard");
     }
   };
-  
 
   return (
     <Container className="py-5">

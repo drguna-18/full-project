@@ -6,27 +6,26 @@ import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
 
 function Dashboard() {
-  const status = localStorage.getItem("status")||"pending";
+  const status = localStorage.getItem("status") || "pending";
 
   const [applications, setApplications] = useState([]);
-    const [selectedApp, setSelectedApp] = useState(null); // ✅ should be null, not false
-    const [selectedLicense,setSelectedLicense]= useState([]);
-  
-    useEffect(() => {
-      const fetchApplications = async () => {
-        try {
-          const response = await axios.get('http://localhost:5000/api/getTradeLicense');
-          const data = response.data;
-          setApplications(data);
-        } catch (error) {
-          console.error("Error fetching trade licenses:", error);
-          toast.error("Failed to fetch trade license applications.");
-        }
-      };
-  
-      fetchApplications();
-    }, []);
-  
+  const [selectedApp, setSelectedApp] = useState(null); // ✅ should be null, not false
+  const [selectedLicense, setSelectedLicense] = useState([]);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        // const response = await axios.get('http://localhost:5000/api/getTradeLicense');
+        // const data = response.data;
+        //setApplications(data);
+      } catch (error) {
+        console.error("Error fetching trade licenses:", error);
+        toast.error("Failed to fetch trade license applications.");
+      }
+    };
+
+    fetchApplications();
+  }, []);
 
   const [cardStatuses, setCardStatuses] = useState({
     tradeLicense: status,
@@ -69,24 +68,25 @@ function Dashboard() {
       {/* <Sidebar/> */}
 
       <div>
-      
         <div className="Dash">
-        {/* Main Dashboard */}
-        <Row className="p-4">
-          <h1 className="dashboard-title">Dashboard</h1>
-          <p className="lead text-muted mb-4">
-            Monitor the status of your approvals.
-          </p>
+          {/* Main Dashboard */}
+          <Row className="p-4">
+            <h1 className="dashboard-title">Dashboard</h1>
+            <p className="lead text-muted mb-4">
+              Monitor the status of your approvals.
+            </p>
 
-          <Row className="g-4">
-            {applications.length!==0&&(<Col md={4}>
-              <StatusCard
-                title="Trade License"
-                status={cardStatuses.tradeLicense}
-                icon="building"
-              />
-            </Col>)}
-            {/* <Col md={4}>
+            <Row className="g-4">
+              {applications.length !== 0 && (
+                <Col md={4}>
+                  <StatusCard
+                    title="Trade License"
+                    status={cardStatuses.tradeLicense}
+                    icon="building"
+                  />
+                </Col>
+              )}
+              {/* <Col md={4}>
               <StatusCard
                 title="GST"
                 status={cardStatuses.gst}
@@ -100,10 +100,10 @@ function Dashboard() {
                 icon="file-earmark-text"
               />
             </Col> */}
+            </Row>
           </Row>
-        </Row>
+        </div>
       </div>
-    </div>
     </Container>
   );
 }
